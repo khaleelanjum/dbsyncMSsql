@@ -45,7 +45,7 @@ namespace dbsyncMSsql
 
         public syncservice()
         {
-            _timer = new Timer(.5 * 60 * 1000) { AutoReset = true };
+            _timer = new Timer(2 * 60 * 1000) { AutoReset = false };
             _timer.Elapsed += ExecuteServiceAsync;
         }
                 
@@ -89,11 +89,11 @@ namespace dbsyncMSsql
         private static async Task datasync_condtion()
         {            
 
-            var serverProvider = new SqlSyncChangeTrackingProvider(DBHelper.GetDatabaseConnectionStringMSsqlServer("RetailProExtended"));
+            var serverProvider = new SqlSyncChangeTrackingProvider(DBHelper.GetDatabaseConnectionStringMSsqlServer("AdventureWorks"));
             var clientProvider = new SqlSyncChangeTrackingProvider(DBHelper.GetDatabaseConnectionString("RetailProExtended"));
 
 
-        var tables = new string[] { "Units","WholePayments" };  //"BinaryOptions", "Categories", "EmailDetail", "InvoiceImages", "ModifierImage",  "ProductImage", "SampleFiles",
+        var tables = new string[] { "Address", "BuildVersion", "Codes", "Customer", "CustomerAddress", "ErrorLog", "Product", "ProductCategory", "ProductDescription", "ProductModel", "ProductModelProductDescription", "SalesOrderDetail", "SalesOrderHeader" };  //"BinaryOptions", "Categories", "EmailDetail", "InvoiceImages", "ModifierImage",  "ProductImage", "SampleFiles",
 
 
             var setup = new SyncSetup(tables);
