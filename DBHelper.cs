@@ -26,13 +26,17 @@ namespace dbsyncMSsql
         public static string GetDatabaseConnectionStringMSsqlServer(string dbName) =>
             string.Format(configuration.GetSection("ConnectionStrings")["SqlConnectionServer"], dbName);
 
-        
+        public static string GetSyncTime()
+        {
+            return configuration["SyncInternal:SyncTime"];
+        }
+
 
         /// <summary>
         /// create a server database with datas and an empty client database
         /// </summary>
         /// <returns></returns>
-        
+
 
         public static async Task DeleteDatabaseAsync(string dbName)
         {

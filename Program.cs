@@ -23,11 +23,12 @@ namespace dbsyncMSsql
                     });
 
                     x.RunAsLocalSystem();
-                    x.SetServiceName("DatabaseSync");
+                    x.SetServiceName("DatabaseSyncService");
                     x.SetDisplayName("Database Sync");
-                    x.SetDescription("MSsql to Mssql");
+                    x.SetDescription("MSsql to MSsql");
                     x.StartManually();
                 });
+
 
                 int codeValue = (int)Convert.ChangeType(code, code.GetTypeCode());
                 Environment.ExitCode = codeValue;

@@ -45,7 +45,8 @@ namespace dbsyncMSsql
 
         public syncservice()
         {
-            _timer = new Timer(2 * 60 * 1000) { AutoReset = false };
+            int syncTimeValue = int.Parse(DBHelper.GetSyncTime());
+            _timer = new Timer(syncTimeValue * 60 * 1000) { AutoReset = false };
             _timer.Elapsed += ExecuteServiceAsync;
         }
                 
@@ -89,11 +90,18 @@ namespace dbsyncMSsql
         private static async Task datasync_condtion()
         {            
 
-            var serverProvider = new SqlSyncChangeTrackingProvider(DBHelper.GetDatabaseConnectionStringMSsqlServer("AdventureWorks"));
-            var clientProvider = new SqlSyncChangeTrackingProvider(DBHelper.GetDatabaseConnectionString("RetailProExtended"));
+            var serverProvider = new SqlSyncChangeTrackingProvider(DBHelper.GetDatabaseConnectionStringMSsqlServer("RetailProServer"));
+            var clientProvider = new SqlSyncChangeTrackingProvider(DBHelper.GetDatabaseConnectionString("RetailProClient"));
+            //var tableList = config.GetSection("SyncTables:TableList").Get<List<string>>();
 
 
-        var tables = new string[] { "Address", "BuildVersion", "Codes", "Customer", "CustomerAddress", "ErrorLog", "Product", "ProductCategory", "ProductDescription", "ProductModel", "ProductModelProductDescription", "SalesOrderDetail", "SalesOrderHeader" };  //"BinaryOptions", "Categories", "EmailDetail", "InvoiceImages", "ModifierImage",  "ProductImage", "SampleFiles",
+            var tables = new string[] { "BarcodeDesign", "Billers", "CancelledItems", "Categories", "ChartOfAccounts", "ComboItems", "Companies", "Countries", "CustomerGroups", "Customers", "DiscountByEmployee", "Discounts", "DailyExpenses",
+                                    "DailyExpenseTypes", "EmployeeExpenseTypes", "EmployeeManager", "EmployeePayments", "EmployeeSalary", "EmployeeSalaryDetail", "EmployeesByLocation",
+                                    "LinkedAccounts", "LocationsManager", "MonthlyExpenses", "MonthlyExpenseTypes", "OpenItems", "Options", "Permissions", "PermissionsGroup", "POSRegister", "PriceGroup", "PriceGroupItems",
+                                    "ProductBarcodes", "ProductsIMEI", "ProductsManager", "ProductsPricing", "ProductsSKU", "ProductsVariants", "PurchaseBill", "PurchaseBillDetail",
+                                    "PurchaseReturn", "PurchaseReturnDetail", "PurchasesOrder", "PurchasesOrderDetail", "Recovery", "RecoveryDetail", "Sales", "SalesDetail",
+                                    "Sizes", "SMSDetail", "SMSTemplets", "StockByLocation", "StockTransferOrder", "StockTransferOrderDetail", "StockTransfers", "SubCategories",
+                                    "Suppliers", "TaxRates", "Units", "VariantGroups", "Variants", "WholePayments"};  //"BinaryOptions", "Categories", "EmailDetail", "InvoiceImages", "ModifierImage",  "ProductImage", "SampleFiles",
 
 
             var setup = new SyncSetup(tables);
